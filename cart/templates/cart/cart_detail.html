@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Кошик{% endblock %}
+{% block content %}
+<div class="eyebrow"><span class="led"></span>Кошик</div>
+<h2 class="mb-4">Ваші товари</h2>
+<table class="table">
+  <thead>
+    <tr><th>Товар</th><th>Ціна</th><th>Кількість</th><th>Разом</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for item in cart %}
+    <tr>
+      <td>{{ item.product.name }}</td>
+      <td class="price" style="font-size: 0.95rem;">{{ item.price }} грн</td>
+      <td>{{ item.quantity }}</td>
+      <td class="price" style="font-size: 0.95rem;">{{ item.total_price }} грн</td>
+      <td><a href="{% url 'cart:cart_remove' item.product.id %}" class="btn btn-sm btn-danger">Видалити</a></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-muted">Кошик порожній</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="d-flex justify-content-between align-items-center mt-4">
+  <span class="price" style="font-size: 1.4rem;">Всього: {{ cart.get_total_price }}<span class="price__currency"> грн</span></span>
+  {% if cart|length > 0 %}
+    <a href="{% url 'orders:checkout' %}" class="btn btn-success">Оформити замовлення</a>
+  {% endif %}
+</div>
+{% endblock %}

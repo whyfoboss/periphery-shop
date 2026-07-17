@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Оформлення — Підтвердження{% endblock %}
+{% block content %}
+<div class="eyebrow"><span class="led"></span>Крок 2 з 2</div>
+<h2 class="mb-4">Підтвердження замовлення</h2>
+<div class="row">
+  <div class="col-md-7">
+    <div class="order-card mb-3">
+      <div class="eyebrow" style="margin-bottom: 12px;">Адреса доставки</div>
+      <div><strong>{{ address.full_name }}</strong></div>
+      <div class="text-muted">{{ address.city }}, {{ address.address_line }}</div>
+      <div class="text-muted">{{ address.phone }}</div>
+      {% if address.postal_code %}
+        <div class="text-muted" style="font-size: 0.85rem;">Індекс: {{ address.postal_code }}</div>
+      {% endif %}
+    </div>
+
+    <div class="order-card mb-3">
+      <div class="eyebrow" style="margin-bottom: 12px;">Спосіб оплати</div>
+      <div>{{ payment_display }}</div>
+    </div>
+
+    <div class="order-card">
+      <div class="eyebrow" style="margin-bottom: 14px;">Товари</div>
+      {% for item in cart %}
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <span>{{ item.product.name }}</span>
+            <span class="text-muted" style="font-size: 0.85rem;"> × {{ item.quantity }}</span>
+          </div>
+          <span class="price" style="font-size: 0.95rem;">{{ item.total_price }} грн</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="order-card" style="position: sticky; top: 20px;">
+      <div class="eyebrow" style="margin-bottom: 14px;">Підсумок</div>
+      <div class="d-flex justify-content-between mb-1">
+        <span class="text-muted">Товари</span>
+        <span>{{ total }} грн</span>
+      </div>
+      <div class="d-flex justify-content-between mb-2">
+        <span class="text-muted">Доставка</span>
+        <span>{% if delivery_cost %}{{ delivery_cost }} грн{% else %}Безкоштовно{% endif %}</span>
+      </div>
+      <hr style="border-color: var(--border);">
+      <div class="d-flex justify-content-between mb-3">
+        <strong>До сплати</strong>
+        <span class="price" style="font-size: 1.4rem;">{{ grand_total }}<span class="price__currency"> грн</span></span>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success w-100" style="padding: 12px; font-size: 1.05rem;">
+          Підтвердити та оплатити
+        </button>
+      </form>
+
+      <a href="{% url 'orders:checkout' %}" class="btn btn-outline-light w-100 mt-2">← Назад</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,294 @@
+[
+  {
+    "model": "shop.category",
+    "pk": 1,
+    "fields": {
+      "name": "Ігри",
+      "slug": "games",
+      "audience": "gaming"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 2,
+    "fields": {
+      "name": "Навушники",
+      "slug": "headphones",
+      "audience": "universal"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 3,
+    "fields": {
+      "name": "Мишки",
+      "slug": "mouses",
+      "audience": "universal"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 4,
+    "fields": {
+      "name": "Клавіатури",
+      "slug": "klaviaturi",
+      "audience": "universal"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 5,
+    "fields": {
+      "name": "Монітори",
+      "slug": "monitors",
+      "audience": "universal"
+    }
+  },
+  {
+    "model": "shop.brand",
+    "pk": 1,
+    "fields": {
+      "name": "nintendo",
+      "slug": "nintendo",
+      "logo": "brands/01_07_2026_10.22.30.png"
+    }
+  },
+  {
+    "model": "shop.brand",
+    "pk": 2,
+    "fields": {
+      "name": "sony",
+      "slug": "sony",
+      "logo": "brands/images.png"
+    }
+  },
+  {
+    "model": "shop.brand",
+    "pk": 3,
+    "fields": {
+      "name": "logitech",
+      "slug": "logitech",
+      "logo": "brands/VnaBbYIzpHXXNMbhS2HdLVhfSDWmWxCnetTxC0DNIA6rztOLXT_kd45nfRgYGbz5apyXXRU9-.jpg"
+    }
+  },
+  {
+    "model": "shop.brand",
+    "pk": 4,
+    "fields": {
+      "name": "razer",
+      "slug": "razer",
+      "logo": "brands/LPyRVV5mRfmbqptAf_x2lzJlxIPLJTAzO4iKa0FsLqse3CfgZrySUI1EyL-.jpg"
+    }
+  },
+  {
+    "model": "shop.brand",
+    "pk": 5,
+    "fields": {
+      "name": "SteelSeries",
+      "slug": "steelseries",
+      "logo": "brands/QulVm-e6-5Yaxmhu3U_Xl51OhqZfWtnpSiIa-kezCh4pPGOnnfQ4OadQYFkgEAwROFkxogtv8tE8tD3_V_QEoaP1z.jpg"
+    }
+  },
+  {
+    "model": "shop.brand",
+    "pk": 6,
+    "fields": {
+      "name": "HyperX",
+      "slug": "hyperx",
+      "logo": "brands/77z34JeZRL79Xde6CrihAxmFAVAv5DCmNobGJcnGMDdnws7SXEnRoCmMBYhh8Qboq5sSb_tVWDpOkMMxE_WE9rYL2.jpg"
+    }
+  },
+  {
+    "model": "shop.brand",
+    "pk": 7,
+    "fields": {
+      "name": "msi",
+      "slug": "msi",
+      "logo": "brands/6pvpvwyWDTC3X41WaZ2ktlTtFyX9TfMTdDFk7BkYHGktGGbW6evinb7p_MmvY13Q2I1rrdcNPI5G_TI96.jpg"
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 3,
+    "fields": {
+      "category": 3,
+      "brand": 3,
+      "name": "Logitech G102 LIGHTSYNC",
+      "slug": "logitech-g102-lightsync",
+      "description": "Мышь Logitech G102 LIGHTSYNC позволяет геймеру проходить игры с максимальным комфортом и эффективностью. Данная модель манипулятора обеспечивает стабильное подключение по проводному интерфейсу USB и быструю реакцию на перемещения курсора благодаря датчику с показателем чувствительности до 8000 dpi. Мышь оборудована 6 кнопками.\r\nОсновные кнопки основаны на металлическом пружинном механизме для точного срабатывания. Эргономичная симметричная форма способствует комфортному удержанию правой или левой рукой. Среди прочих особенностей Logitech G102 LIGHTSYNC отмечается многоцветная подсветка RGB.",
+      "price": "1099.00",
+      "stock": 4,
+      "available": true,
+      "created_at": "2026-07-15T11:14:20.050Z",
+      "updated_at": "2026-07-15T11:31:35.684Z"
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 4,
+    "fields": {
+      "category": 3,
+      "brand": 3,
+      "name": "Миша Logitech G Pro X Superlight 2 Lightspeed Wireless Black",
+      "slug": "mouse-logitech-g-pro-x-superlight-2-lightspeed-wireless-black",
+      "description": "Мышь беспроводная Logitech G PRO X SUPERLIGHT 2 стала обладателем оптического светодиодного сенсора HERO 2, который имеет настраиваемое разрешение в диапазоне от 100 до 32000 dpi. Вы сможете выбрать подходящий режим работы в зависимости от решаемых задач, типа монитора и поверхности под манипулятором. В конструкцию устройства входят пять кнопок с возможностью их программирования на выполнение определенных действий. Подходящие конфигурации кнопок и прочие настройки можно сохранять во встроенную память мыши.\r\nБеспроводная мышь Logitech G PRO X SUPERLIGHT 2 облачена в черный пластиковый корпус, форма которого подходит для использования правой рукой. Стабильную связь с компьютером обеспечивает радиоканал, который настраивается при помощи комплектного USB-ресивера. Для автономной работы манипулятора имеется встроенный аккумулятор, заряда которого хватает на 95 часов непрерывного функционирования.",
+      "price": "5599.00",
+      "stock": 2,
+      "available": true,
+      "created_at": "2026-07-15T11:44:06.278Z",
+      "updated_at": "2026-07-15T11:44:06.278Z"
+    }
+  },
+  {
+    "model": "shop.productimage",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "image": "products/15_07_2026_14.13.55.png",
+      "is_main": false
+    }
+  },
+  {
+    "model": "shop.productimage",
+    "pk": 4,
+    "fields": {
+      "product": 4,
+      "image": "products/15_07_2026_14.38.52.png",
+      "is_main": false
+    }
+  },
+  {
+    "model": "shop.review",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "user": [
+        "whyfoboss"
+      ],
+      "rating": 3,
+      "text": "колесико сломалось спустя 6 месяцев, за свою цену норм но много брака + часто ломается колесико",
+      "created_at": "2026-07-15T11:32:48.695Z"
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 1,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Під'єднання",
+      "value": "Дротове",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 2,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Розмір миші",
+      "value": "Середня (105-120) мм",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Кількість кнопок миші",
+      "value": "6",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 4,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Колір",
+      "value": "Чорний",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 5,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Максимальна роздільна здатність сенсора",
+      "value": "8000 dpi",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 6,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Тип датчика",
+      "value": "Оптичний",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 7,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Довжина кабелю",
+      "value": "2.1 м",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 8,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Кнопки",
+      "value": "Програмовані",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 9,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Дизайн",
+      "value": "Монохромний",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 10,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Гарантія",
+      "value": "24 місяці офіційної гарантії від виробника",
+      "order": 0
+    }
+  },
+  {
+    "model": "shop.productspec",
+    "pk": 11,
+    "fields": {
+      "product": 3,
+      "group": "Загальні характеристики",
+      "name": "Комплектація",
+      "value": "Миша, Документація користувача",
+      "order": 0
+    }
+  }
+]

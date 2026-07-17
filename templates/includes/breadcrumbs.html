@@ -1,0 +1,9 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'shop:product_list' %}">Головна</a></li>
+    {% if product.category %}
+      <li class="breadcrumb-item"><a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a></li>
+    {% endif %}
+    <li class="breadcrumb-item active">{{ product.name }}</li>
+  </ol>
+</nav>

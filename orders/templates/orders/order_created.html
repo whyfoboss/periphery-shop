@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Замовлення прийнято{% endblock %}
+{% block content %}
+<div class="auth-card text-center">
+  <span class="led"></span>
+  <h2 class="mb-3 mt-2">Замовлення №{{ order.id }} прийнято</h2>
+  <p class="text-muted mb-3">Ми надіслали підтвердження на вашу пошту.</p>
+
+  <div class="order-card text-left mt-3" style="text-align: left; max-width: 400px; margin: 0 auto;">
+    <div class="eyebrow" style="margin-bottom: 10px;">Інформація про оплату</div>
+    <p>{{ payment_info }}</p>
+    <div class="text-muted" style="font-size: 0.85rem; margin-top: 8px;">
+      <strong>Адреса:</strong> {{ order.shipping_address.city }}, {{ order.shipping_address.address_line }}
+    </div>
+  </div>
+
+  <div class="d-flex gap-2 justify-content-center mt-4">
+    <a href="{% url 'shop:product_list' %}" class="btn btn-primary">До каталогу</a>
+    <a href="{% url 'accounts:profile' %}" class="btn btn-outline-light">Мої замовлення</a>
+  </div>
+</div>
+{% endblock %}

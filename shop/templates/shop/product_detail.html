@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block breadcrumbs %}
+  {% include 'includes/breadcrumbs.html' %}
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-5">
+    <div class="product-card__media" style="height: 360px; border-radius: 12px; border: 1px solid var(--border);">
+      {% if product.main_image %}
+        <img src="{{ product.main_image.image.url }}" alt="{{ product.name }}">
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-md-7">
+    <div class="product-card__meta mb-2">
+      <span class="tag">{{ product.category.name }}</span>
+      {% if product.brand %}<span class="tag">{{ product.brand.name }}</span>{% endif %}
+    </div>
+    <h2>{{ product.name }}</h2>
+
+    {% if product.reviews_count %}
+      <div class="rating-line mb-2">
+        <span class="stars" style="--rating: {{ product.avg_rating|floatformat:1 }};"></span>
+        <span class="rating-number">{{ product.avg_rating|floatformat:1 }}</span>
+        <a href="#reviews">{{ product.reviews_count }} відгук{{ product.reviews_count|pluralize:"ів" }}</a>
+      </div>
+    {% else %}
+      <div class="rating-line mb-2">Ще немає відгуків</div>
+    {% endif %}
+
+    <div class="stock-indicator mb-3">
+      <span class="led"></span>
+      {% if product.stock > 0 %}В наявності — {{ product.stock }} шт.{% else %}Немає в наявності{% endif %}
+    </div>
+    <p class="text-muted">{{ product.description }}</p>
+    <div class="price mb-3" style="font-size: 1.8rem;">{{ product.price }}<span class="price__currency"> грн</span></div>
+    <form action="{% url 'cart:cart_add' product.id %}" method="post" class="d-flex gap-2">
+      {% csrf_token %}
+      <input type="number" name="quantity" value="1" min="1" class="form-control" style="width: 90px;">
+      <button type="submit" class="btn btn-primary">Додати в кошик</button>
+      {% if user.is_authenticated %}
+        <a href="{% url 'accounts:wishlist_toggle' product.id %}" class="btn-heart-wrap {% if in_wishlist %}active{% endif %}" title="Додати в обрані">
+          <span class="btn-heart-icon"></span>
+        </a>
+      {% endif %}
+    </form>
+  </div>
+</div>
+
+{% if specs_grouped %}
+<hr style="border-color: var(--border); margin: 40px 0;">
+<div class="eyebrow"><span class="led"></span>Характеристики</div>
+<div class="row">
+  {% for group_name, specs in specs_grouped.items %}
+    <div class="col-md-6 spec-group">
+      <div class="spec-group__title">{{ group_name }}</div>
+      {% for spec in specs %}
+        <div class="spec-row">
+          <span class="spec-row__name">{{ spec.name }}</span>
+          <span class="spec-row__value">{{ spec.value }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<hr style="border-color: var(--border); margin: 40px 0;" id="reviews">
+<div class="eyebrow"><span class="led"></span>Відгуки</div>
+
+{% if product.reviews_count %}
+  <div class="rating-summary">
+    <div class="rating-summary__number">{{ product.avg_rating|floatformat:1 }}</div>
+    <div>
+      <span class="stars" style="--rating: {{ product.avg_rating|floatformat:1 }}; font-size: 20px;"></span>
+      <div class="text-muted" style="font-size: 0.85rem; margin-top: 4px;">на основі {{ product.reviews_count }} відгук{{ product.reviews_count|pluralize:"ів" }}</div>
+    </div>
+  </div>
+{% endif %}
+
+{% if review_form %}
+  <form method="post" action="{% url 'shop:add_review' product.id %}" class="order-card mb-4">
+    {% csrf_token %}
+    {{ review_form.as_p }}
+    <button type="submit" class="btn btn-primary">Залишити відгук</button>
+  </form>
+{% elif user_has_reviewed %}
+  <p class="text-muted">Ви вже залишили відгук на цей товар. Дякуємо!</p>
+{% elif not request.user.is_authenticated %}
+  <p class="text-muted"><a href="{% url 'accounts:login' %}">Увійдіть</a>, щоб залишити відгук.</p>
+{% endif %}
+
+<div>
+  {% for review in reviews %}
+    <div class="review-card">
+      <div class="review-card__header">
+        <div>
+          <span class="review-card__author">{{ review.user.username }}</span>
+          <span class="stars ms-2" style="--rating: {{ review.rating }};"></span>
+        </div>
+        <span class="review-card__date">{{ review.created_at|date:"d.m.Y" }}</span>
+      </div>
+      <p class="mb-0">{{ review.text }}</p>
+    </div>
+  {% empty %}
+    <p class="text-muted">Поки що немає відгуків. Будьте першим!</p>
+  {% endfor %}
+</div>
+
+{% if related_products %}
+<hr style="border-color: var(--border); margin: 40px 0;">
+<div class="eyebrow"><span class="led"></span>Схожі товари</div>
+<div class="row">
+  {% for p in related_products %}
+    <div class="col-md-3 mb-3">
+      <div class="product-card">
+        <div class="product-card__media" style="height: 140px;">
+          {% if p.main_image %}<img src="{{ p.main_image.image.url }}" alt="{{ p.name }}">{% endif %}
+        </div>
+        <div class="product-card__body">
+          <h3 class="product-card__title" style="font-size: 0.92rem;"><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></h3>
+          <span class="price" style="font-size: 1rem;">{{ p.price }}<span class="price__currency"> грн</span></span>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

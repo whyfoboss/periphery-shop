@@ -1,0 +1,8 @@
+<h2>Дякуємо за замовлення!</h2>
+<p>Ваше замовлення №{{ order.id }} прийнято в обробку.</p>
+<ul>
+  {% for item in order.items.all %}
+    <li>{{ item.product.name }} × {{ item.quantity }} — {{ item.get_cost }} грн</li>
+  {% endfor %}
+</ul>
+<p><b>Разом: {{ order.get_total_cost }} грн</b></p>

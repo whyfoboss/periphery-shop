@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Обрані товари{% endblock %}
+{% block content %}
+<div class="eyebrow"><span class="led"></span>Обрані</div>
+<h2 class="mb-4">Мої обрані товари</h2>
+
+{% if products %}
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-3 mb-4">
+        <div class="product-card">
+          <div class="product-card__media" style="height: 180px;">
+            {% if product.main_image %}
+              <img src="{{ product.main_image.image.url }}" alt="{{ product.name }}">
+            {% endif %}
+          </div>
+          <div class="product-card__body">
+            <div class="product-card__meta">
+              <span class="tag">{{ product.category.name }}</span>
+              {% if product.brand %}<span class="tag">{{ product.brand.name }}</span>{% endif %}
+            </div>
+            <h3 class="product-card__title" style="font-size: 0.92rem;">
+              <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+            </h3>
+            <div class="product-card__footer">
+              <span class="price" style="font-size: 1rem;">{{ product.price }}<span class="price__currency"> грн</span></span>
+              <a href="{% url 'accounts:wishlist_toggle' product.id %}" class="btn-heart active" title="Видалити з обраних">❤️</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="auth-card text-center">
+    <p class="text-muted mb-3">Список обраних порожній</p>
+    <a href="{% url 'shop:product_list' %}" class="btn btn-primary">До каталогу</a>
+  </div>
+{% endif %}
+{% endblock %}

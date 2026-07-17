@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Оформлення замовлення{% endblock %}
+{% block content %}
+<div class="eyebrow"><span class="led"></span>Checkout</div>
+<h2 class="mb-4">Оформлення замовлення</h2>
+<div class="row">
+  <div class="col-md-6">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success mt-2">Підтвердити замовлення</button>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <div class="order-card">
+      <div class="eyebrow" style="margin-bottom: 14px;">Ваше замовлення</div>
+      {% for item in cart %}
+        <div class="d-flex justify-content-between mb-2">
+          <span>{{ item.product.name }} × {{ item.quantity }}</span>
+          <span class="price" style="font-size: 0.95rem;">{{ item.total_price }} грн</span>
+        </div>
+      {% endfor %}
+      <hr style="border-color: var(--border);">
+      <div class="d-flex justify-content-between">
+        <strong>Разом</strong>
+        <span class="price" style="font-size: 1.2rem;">{{ cart.get_total_price }}<span class="price__currency"> грн</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

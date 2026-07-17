@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block title %}Реєстрація{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <div class="eyebrow"><span class="led"></span>Реєстрація</div>
+  <h2 class="mb-4">Створити акаунт</h2>
+
+  <form method="post" id="register-form">
+    {% csrf_token %}
+
+    {% if form.errors %}
+    <div class="alert alert-danger" style="background: rgba(255,85,85,0.1); border: 1px solid rgba(255,85,85,0.3); color: #ff5555; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px;">
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}<div>{{ error }}</div>{% endfor %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="mb-3">
+      <label class="form-label" style="color: var(--text); font-size: 0.85rem;">Ім'я користувача</label>
+      <input type="text" name="username" class="form-control" value="{{ form.username.value|default:'' }}" required
+        style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 8px;">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" style="color: var(--text); font-size: 0.85rem;">Спосіб реєстрації</label>
+      <div class="d-flex gap-2" id="reg-method-toggle">
+        <button type="button" class="reg-method-btn active" data-method="email" onclick="switchMethod('email')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Пошта
+        </button>
+        <button type="button" class="reg-method-btn" data-method="phone" onclick="switchMethod('phone')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Телефон
+        </button>
+      </div>
+      <input type="hidden" name="reg_method" id="reg_method_hidden" value="email">
+    </div>
+
+    <div id="email-field" class="mb-3">
+      <label class="form-label" style="color: var(--text); font-size: 0.85rem;">Email</label>
+      <input type="email" name="email" class="form-control" value="{{ form.email.value|default:'' }}"
+        style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 8px;"
+        placeholder="you@example.com">
+    </div>
+
+    <div id="phone-field" class="mb-3" style="display: none;">
+      <label class="form-label" style="color: var(--text); font-size: 0.85rem;">Телефон</label>
+      <input type="tel" name="phone" class="form-control" value="{{ form.phone.value|default:'' }}"
+        style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 8px;"
+        placeholder="+380XXXXXXXXX">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" style="color: var(--text); font-size: 0.85rem;">Пароль</label>
+      {{ form.password1 }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" style="color: var(--text); font-size: 0.85rem;">Підтвердження пароля</label>
+      {{ form.password2 }}
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 mt-2">Зареєструватись</button>
+  </form>
+
+  <div class="d-flex align-items-center my-3">
+    <hr style="flex: 1; border-color: var(--border); margin: 0;">
+    <span class="text-muted mx-2" style="font-size: 0.82rem;">або</span>
+    <hr style="flex: 1; border-color: var(--border); margin: 0;">
+  </div>
+
+  <a href="{% provider_login_url 'google' %}" class="btn btn-outline-light w-100" style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px;">
+    <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+    Зареєструватись через Google
+  </a>
+
+  <p class="text-muted mt-3 mb-0">Вже маєте акаунт? <a href="{% url 'accounts:login' %}">Увійти</a></p>
+</div>
+
+<style>
+  .reg-method-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .reg-method-btn:hover {
+    border-color: var(--signal);
+    color: var(--text);
+  }
+  .reg-method-btn.active {
+    border-color: var(--signal);
+    background: rgba(82, 224, 196, 0.1);
+    color: var(--signal);
+  }
+</style>
+
+<script>
+function switchMethod(method) {
+  document.getElementById('reg_method_hidden').value = method;
+  document.getElementById('email-field').style.display = method === 'email' ? 'block' : 'none';
+  document.getElementById('phone-field').style.display = method === 'phone' ? 'block' : 'none';
+  document.querySelectorAll('.reg-method-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.method === method);
+  });
+}
+</script>
+{% endblock %}

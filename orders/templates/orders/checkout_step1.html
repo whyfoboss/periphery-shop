@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}Оформлення — Крок 1{% endblock %}
+{% block content %}
+<div class="eyebrow"><span class="led"></span>Крок 1 з 2</div>
+<h2 class="mb-4">Адреса доставки та оплата</h2>
+<div class="row">
+  <div class="col-md-7">
+    {% if saved_addresses %}
+      <div class="order-card mb-3">
+        <div class="eyebrow" style="margin-bottom: 12px;">Збережені адреси</div>
+        {% for addr in saved_addresses %}
+          <label class="d-flex gap-3 align-items-start mb-3 p-2" style="border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer;">
+            <input type="radio" name="address_id" value="{{ addr.id }}" {% if forloop.first %}checked{% endif %}
+              onchange="document.getElementById('saved-section').style.display='none';">
+            <div>
+              <div style="font-weight: 600;">{{ addr.full_name }}</div>
+              <div class="text-muted" style="font-size: 0.88rem;">{{ addr.city }}, {{ addr.address_line }}</div>
+              <div class="text-muted" style="font-size: 0.85rem;">{{ addr.phone }}</div>
+            </div>
+          </label>
+        {% endfor %}
+        <button type="button" class="btn btn-outline-light btn-sm w-100"
+          onclick="document.getElementById('saved-section').style.display='block'; document.querySelectorAll('[name=address_id]').forEach(r => r.checked = false);">
+          Ввести іншу адресу
+        </button>
+      </div>
+    {% endif %}
+
+    <div id="saved-section" class="order-card" {% if not saved_addresses %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+      <div class="eyebrow" style="margin-bottom: 12px;">Адреса доставки</div>
+      <form method="post" id="checkout-form">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+            <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.html_name }}"
+              value="{{ field.value|default:'' }}" class="form-control"
+              placeholder="{{ field.label }}">
+            {% if field.errors %}
+              <div class="text-danger" style="font-size: 0.82rem;">{{ field.errors }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <div class="eyebrow mt-4" style="margin-bottom: 12px;">Спосіб оплати</div>
+        <div class="d-flex flex-column gap-2">
+          <label class="d-flex gap-3 align-items-center p-2" style="border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer;">
+            <input type="radio" name="payment_method" value="cash" checked>
+            <div>
+              <div style="font-weight: 600;">Готівка при отриманні</div>
+              <div class="text-muted" style="font-size: 0.82rem;">Оплатите кур'єру або у відділенні</div>
+            </div>
+          </label>
+          <label class="d-flex gap-3 align-items-center p-2" style="border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer;">
+            <input type="radio" name="payment_method" value="card">
+            <div>
+              <div style="font-weight: 600;">Оплата карткою онлайн</div>
+              <div class="text-muted" style="font-size: 0.82rem;">Visa, Mastercard, Приват</div>
+            </div>
+          </label>
+          <label class="d-flex gap-3 align-items-center p-2" style="border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer;">
+            <input type="radio" name="payment_method" value="google_pay">
+            <div>
+              <div style="font-weight: 600;">Google Pay</div>
+              <div class="text-muted" style="font-size: 0.82rem;">Швидка оплата через Google Pay</div>
+            </div>
+          </label>
+        </div>
+
+        <label class="d-flex gap-2 align-items-center mt-3" style="cursor: pointer;">
+          <input type="checkbox" name="save_address" value="on">
+          <span class="text-muted" style="font-size: 0.85rem;">Зберегти адресу для наступних замовлень</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary w-100 mt-4" style="padding: 12px;">
+          Продовжити →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="order-card" style="position: sticky; top: 20px;">
+      <div class="eyebrow" style="margin-bottom: 14px;">Ваше замовлення</div>
+      {% for item in cart %}
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted">{{ item.product.name }} × {{ item.quantity }}</span>
+          <span class="price" style="font-size: 0.95rem;">{{ item.total_price }} грн</span>
+        </div>
+      {% endfor %}
+      <hr style="border-color: var(--border);">
+      <div class="d-flex justify-content-between mb-1">
+        <span class="text-muted">Товари</span>
+        <span>{{ total }} грн</span>
+      </div>
+      <div class="d-flex justify-content-between mb-2">
+        <span class="text-muted">Доставка</span>
+        <span>{% if delivery_cost %}{{ delivery_cost }} грн{% else %}Безкоштовно{% endif %}</span>
+      </div>
+      <hr style="border-color: var(--border);">
+      <div class="d-flex justify-content-between">
+        <strong>Разом</strong>
+        <span class="price" style="font-size: 1.3rem;">{{ total }}<span class="price__currency"> грн</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
